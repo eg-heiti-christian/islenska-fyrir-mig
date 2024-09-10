@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body className="h-screen overflow-hidden">
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -25,7 +25,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             disableTransitionOnChange>
 
           <AppHeader />
-          <main>{children}</main>
+          <main className="overflow-y-scroll">
+            {children}
+          </main>
 
         </ThemeProvider>
       </body>
