@@ -23,7 +23,7 @@ type Submenu = {
 const menus: Menu[] = [
     {
         label: "Home",
-        href: "/home"
+        href: "/"
     },
     {
         label: "Verbs",
@@ -76,7 +76,7 @@ export default function SideNav() {
             } else {
                 return (
                     <NavigationMenuItem className="flex">
-                        <NavigationMenuLink className="" href={menuItem.href} asChild>
+                        <NavigationMenuLink className="" href={menuItem.href}>
                             <Button className="w-56" variant="ghost">
                                 {menuItem.label}
                             </Button>
