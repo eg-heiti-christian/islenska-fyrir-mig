@@ -23,6 +23,7 @@ type Submenu = {
 const menus: Menu[] = [
     {
         label: "Home",
+        href: "/home"
     },
     {
         label: "Verbs",
