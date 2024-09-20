@@ -46,7 +46,7 @@ export default function SideNav() {
     const getMenuContent = (submenus: Submenu[]) => {
         return submenus.map((submenuItem) => {
             return (
-                <li className="col-span-1">
+                <li key={submenuItem.label} className="col-span-1">
                     <NavigationMenuItem className="w-56">
                         <NavigationMenuLink href={submenuItem.href}>
                             <Button className="w-56" variant="ghost">
@@ -62,7 +62,7 @@ export default function SideNav() {
         return menus.map((menuItem) => {
             if (menuItem.submenu) {
                 return (
-                    <NavigationMenuItem>
+                    <NavigationMenuItem key={menuItem.label}>
                         <NavigationMenuTrigger className="w-56">
                             {menuItem.label}
                         </NavigationMenuTrigger>
@@ -75,7 +75,7 @@ export default function SideNav() {
                 )
             } else {
                 return (
-                    <NavigationMenuItem className="flex">
+                    <NavigationMenuItem key={menuItem.label} className="flex">
                         <NavigationMenuLink className="" href={menuItem.href}>
                             <Button className="w-56" variant="ghost">
                                 {menuItem.label}
