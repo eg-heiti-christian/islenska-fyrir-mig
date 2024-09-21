@@ -2,16 +2,16 @@
 
 import React, { useState, useCallback } from "react"
 
-import { Menu } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
 
 type Menu = {
     label: string
-    submenu?: Submenu[]
+    submenu: Submenu[]
     href: string
 }
 
@@ -23,7 +23,8 @@ type Submenu = {
 const menus: Menu[] = [
     {
         label: "Home",
-        href: "/"
+        href: "/",
+        submenu: []
     },
     {
         label: "Verbs",
@@ -41,7 +42,12 @@ const menus: Menu[] = [
     }
 ];
 
-export default function SideNav() {
+interface SubMenuNavLinkProps {
+    menuItem: Menu;
+}
+function SubMenuNavLink(props: SubMenuNavLinkProps) {
+
+    const [expanded, setExpanded] = useState<boolean>(false);
 
     const getMenuContent = (submenus: Submenu[]) => {
         return submenus.map((submenuItem) => {
@@ -58,20 +64,32 @@ export default function SideNav() {
             )
         })
     }
+
+    return (
+        <>
+            <Button className="w-full group" data-expanded={expanded} variant="ghost" onClick={() => setExpanded(!expanded)}>
+                {props.menuItem.label}
+                <ChevronDown
+                    className="relative top-[1px] ml-1 h-3 w-3 transition duration-300 group-data-[expanded=true]:rotate-180"
+                    aria-hidden="true"
+                />
+            </Button>
+            <ul className={`grid w-full ${expanded ? "max-h-40" : "max-h-0"} overflow-hidden transition-[max-height] duration-300 ease-in`}>
+                {getMenuContent(props.menuItem.submenu)}
+            </ul>
+        </>
+    )
+}
+
+export default function SideNav() {
+
     const getNavLinks = useCallback(() => {
         return menus.map((menuItem) => {
-            if (menuItem.submenu) {
+            if (menuItem.submenu.length > 0) {
                 return (
-                    <NavigationMenuItem key={menuItem.label} className="w-full">
-                        <NavigationMenuTrigger className="w-full">
-                            {menuItem.label}
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                                <ul className="grid">
-                                    {getMenuContent(menuItem.submenu)}
-                                </ul>
-                        </NavigationMenuContent>
-                    </NavigationMenuItem>
+                    <SubMenuNavLink 
+                        menuItem={menuItem}
+                    />
                 )
             } else {
                 return (
