@@ -47,9 +47,9 @@ export default function SideNav() {
         return submenus.map((submenuItem) => {
             return (
                 <li key={submenuItem.label} className="col-span-1">
-                    <NavigationMenuItem className="w-56">
+                    <NavigationMenuItem>
                         <NavigationMenuLink href={submenuItem.href}>
-                            <Button className="w-56" variant="ghost">
+                            <Button className="w-full" variant="ghost">
                                 {submenuItem.label}
                             </Button>
                         </NavigationMenuLink>
@@ -62,22 +62,22 @@ export default function SideNav() {
         return menus.map((menuItem) => {
             if (menuItem.submenu) {
                 return (
-                    <NavigationMenuItem key={menuItem.label}>
-                        <NavigationMenuTrigger className="w-56">
+                    <NavigationMenuItem key={menuItem.label} className="w-full">
+                        <NavigationMenuTrigger className="w-full">
                             {menuItem.label}
                         </NavigationMenuTrigger>
-                        <NavigationMenuContent className="w-56">
-                            <ul className="grid w-56">
-                                {getMenuContent(menuItem.submenu)}
-                            </ul>
+                        <NavigationMenuContent>
+                                <ul className="grid">
+                                    {getMenuContent(menuItem.submenu)}
+                                </ul>
                         </NavigationMenuContent>
                     </NavigationMenuItem>
                 )
             } else {
                 return (
-                    <NavigationMenuItem key={menuItem.label} className="flex">
-                        <NavigationMenuLink className="" href={menuItem.href}>
-                            <Button className="w-56" variant="ghost">
+                    <NavigationMenuItem key={menuItem.label} className="w-full">
+                        <NavigationMenuLink href={menuItem.href}>
+                            <Button className="w-full" variant="ghost">
                                 {menuItem.label}
                             </Button>
                         </NavigationMenuLink>
@@ -97,13 +97,15 @@ export default function SideNav() {
                         <Menu className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100" />
                     </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-56 p-0">
-                    <ScrollArea className="h-screen rounded-md">
-                        <div className="w-56 mt-9">
-                            <NavigationMenu className="rounded-md" orientation="vertical">
-                                <NavigationMenuList className="flex flex-col">
-                                    {getNavLinks()}
-                                </NavigationMenuList>
+                <SheetContent side="left" className="w-full sm:w-1/4 p-0">
+                    <ScrollArea className="w-full h-screen rounded-md">
+                        <div className="min-w-full mt-9">
+                            <NavigationMenu className="min-w-full rounded-md" orientation="vertical">
+                                <div className="w-full">
+                                    <NavigationMenuList className="flex flex-col min-w-full">
+                                        {getNavLinks()}
+                                    </NavigationMenuList>
+                                </div>
                             </NavigationMenu>
                         </div>
                     </ScrollArea>
