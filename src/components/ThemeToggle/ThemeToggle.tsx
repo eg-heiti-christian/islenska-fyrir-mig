@@ -9,7 +9,7 @@ export const ThemeToggle = () => {
         <ActionIcon
             onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
             variant="default"
-            size="xl"
+            size="lg"
             aria-label="Toggle color scheme"
             className='ml-5'
         >
