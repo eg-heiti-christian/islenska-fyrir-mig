@@ -2,6 +2,7 @@ import { AppShell, Drawer } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 import { AppHeader } from '../AppHeader/AppHeader';
+import { Navbar } from '../Navbar/Navbar';
 
 
 interface Props {
@@ -23,11 +24,10 @@ export const Layout = (props: Props) => {
             </AppShell.Header>
             
             <Drawer opened={opened} size="xs" onClose={close}>
-                Navbar
+                <Navbar />
             </Drawer>
 
             <AppShell.Main>
-                
                 {props.children}
             </AppShell.Main>
             
