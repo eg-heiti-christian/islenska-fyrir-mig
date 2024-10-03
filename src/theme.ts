@@ -1,8 +1,6 @@
 import {
   createTheme,
-  CSSVariablesResolver,
-  MantineProvider,
-  rem,
+  CSSVariablesResolver
 } from '@mantine/core';
 
 

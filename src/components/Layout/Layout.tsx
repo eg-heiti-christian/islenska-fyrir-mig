@@ -13,7 +13,7 @@ export const Layout = () => {
     return (
         <AppShell
             padding="md"
-            header={{ height: 60 }}>
+            header={{ height: 80 }}>
 
             <AppShell.Header>
                 <AppHeader 
