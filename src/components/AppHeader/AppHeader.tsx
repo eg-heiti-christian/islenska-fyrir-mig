@@ -13,7 +13,6 @@ export const AppHeader = (props: Props) => {
             <div className='flex w-1/4 '>
                 <ActionIcon className='self-start' 
                     onClick={props.open} 
-                    variant="default" 
                     size="lg"
                     aria-label="Menu">
                     <Menu className='h-[1.2rem] w-[1.2rem]' />
