@@ -92,8 +92,7 @@ export const theme = createTheme({
       "#b3b4b1",
     ]
   },
-  white: 'platinum',
-  primaryColor: 'oxfordBlue'
+  primaryColor: 'yinmnBlue'
 });
 
 
