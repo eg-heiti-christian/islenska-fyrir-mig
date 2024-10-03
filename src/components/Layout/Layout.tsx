@@ -1,14 +1,12 @@
+import { Outlet } from "react-router-dom";
+
 import { AppShell, Drawer } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 import { AppHeader } from '../AppHeader/AppHeader';
 import { Navbar } from '../Navbar/Navbar';
 
-
-interface Props {
-    children: React.ReactNode
-}
-export const Layout = (props: Props) => {
+export const Layout = () => {
 
     const [opened, { open, close }] = useDisclosure(false);
 
@@ -24,11 +22,11 @@ export const Layout = (props: Props) => {
             </AppShell.Header>
             
             <Drawer opened={opened} size="xs" onClose={close}>
-                <Navbar />
+                <Navbar onNavLinkClick={close} />
             </Drawer>
 
             <AppShell.Main>
-                {props.children}
+                <Outlet />
             </AppShell.Main>
             
         </AppShell>
