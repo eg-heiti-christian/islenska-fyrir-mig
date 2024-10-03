@@ -1,16 +1,24 @@
-import { createTheme, virtualColor } from '@mantine/core';
+import {
+  createTheme,
+  CSSVariablesResolver,
+  MantineProvider,
+  rem,
+} from '@mantine/core';
+
 
 export const theme = createTheme({
   /** Put your mantine theme override here */
 
   colors: {
-    /* richBlack: #0D1B2A
-    oxfordBlue: #1B263B;
-    yinmnBlue: #415A77;
-    silverLakeBlue: #778DA9;
-    platinum: #E0E1DD; */
 
-    // use https://www.shadegenerator.com/0D1B2A for other colors
+    /* 
+      richBlack: #0D1B2A
+      oxfordBlue: #1B263B;
+      yinmnBlue: #415A77;
+      silverLakeBlue: #778DA9;
+      platinum: #E0E1DD; 
+    */
+
     dark: [
       "#b6bbbf",
       "#9ea4aa",
@@ -84,5 +92,18 @@ export const theme = createTheme({
       "#b3b4b1",
     ]
   },
-  primaryColor: 'yinmnBlue'
+  white: 'platinum',
+  primaryColor: 'oxfordBlue'
+});
+
+
+export const resolver: CSSVariablesResolver = (theme) => ({
+  variables: {},
+  light: {
+    
+  },
+  dark: {
+    // https://mantine.dev/styles/css-variables-list/
+    //'--mantine-primary-color-filled': theme.colors.silverLakeBlue[7],
+  },
 });

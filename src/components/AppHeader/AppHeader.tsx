@@ -24,7 +24,7 @@ export const AppHeader = (props: Props) => {
             </div>
             
             <div className='flex w-1/5 justify-end'>
-                <ThemeToggle />
+                
             </div>
         </div>
     )
