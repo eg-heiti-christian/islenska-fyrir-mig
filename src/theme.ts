@@ -3,7 +3,6 @@ import {
   CSSVariablesResolver
 } from '@mantine/core';
 
-
 export const theme = createTheme({
   /** Put your mantine theme override here */
 
@@ -90,14 +89,16 @@ export const theme = createTheme({
       "#b3b4b1",
     ]
   },
-  primaryColor: 'yinmnBlue'
+  primaryColor: 'oxfordBlue',
+  primaryShade: 7
+
 });
 
 
 export const resolver: CSSVariablesResolver = (theme) => ({
   variables: {},
   light: {
-    
+
   },
   dark: {
     // https://mantine.dev/styles/css-variables-list/
