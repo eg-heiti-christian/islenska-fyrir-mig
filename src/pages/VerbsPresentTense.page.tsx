@@ -6,7 +6,15 @@ import { IVerb } from "../lib/models/IVerb"
 export const VerbsPresentTensePage = () => {
 
     const verb: IVerb = {
-        infinitive: 'að eiga'
+        infinitive: 'að eiga',
+        presentTense: {
+            singularFirstPerson: 'á',
+            pluralFirstPerson: 'eigum',
+            singularSecondPerson: 'átt',
+            pluralSecondPerson: 'eigið',
+            singularThirdPerson: 'á',
+            pluralThirdPerson: 'eiga'
+        }
     }
     return (
         <Grid>
