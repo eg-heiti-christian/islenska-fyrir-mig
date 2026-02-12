@@ -1,13 +1,4 @@
-export type NounCase = 'nominative' | 'accusative' | 'dative' | 'genitive'
-
-export type NounNumber = 'singular' | 'plural'
-
-export type Noun = {
-  lemma: string
-  answers: Record<NounCase, string>
-}
-
-export const nounLemmas = [
+[
   "bátur",
   "bók",
   "drengur",
@@ -967,11 +958,4 @@ export const nounLemmas = [
   "fáni",
   "leyfi",
   "ráð"
-];
-
-export const nounCaseOptions: Array<{ key: NounCase; label: string }> = [
-  { key: 'nominative', label: 'Nominative' },
-  { key: 'accusative', label: 'Accusative' },
-  { key: 'dative', label: 'Dative' },
-  { key: 'genitive', label: 'Genitive' },
 ]

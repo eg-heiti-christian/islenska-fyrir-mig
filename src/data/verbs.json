@@ -1,13 +1,4 @@
-export type ConjugationKey = '1P-ET' | '2P-ET' | '3P-ET' | '1P-FT' | '2P-FT' | '3P-FT'
-
-export type Tense = 'present' | 'past'
-
-export type Verb = {
-  infinitive: string
-  answers: Record<ConjugationKey, string>
-}
-
-export const verbLemmas = [
+[
   "bera",
   "birta",
   "biðja",
@@ -476,22 +467,4 @@ export const verbLemmas = [
   "heimta",
   "blæða",
   "hengja"
-];
-
-export const fields: Array<{ key: ConjugationKey; label: string }> = [
-  { key: '1P-ET', label: 'ég' },
-  { key: '2P-ET', label: 'þú' },
-  { key: '3P-ET', label: 'hann/hún/það' },
-  { key: '1P-FT', label: 'við' },
-  { key: '2P-FT', label: 'þið' },
-  { key: '3P-FT', label: 'þeir/þær/þau' },
 ]
-
-export const emptyAnswers: Record<ConjugationKey, string> = {
-  '1P-ET': '',
-  '2P-ET': '',
-  '3P-ET': '',
-  '1P-FT': '',
-  '2P-FT': '',
-  '3P-FT': '',
-}
