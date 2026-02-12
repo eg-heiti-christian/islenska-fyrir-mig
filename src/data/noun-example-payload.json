@@ -1,0 +1,70 @@
+[
+    {
+        "g": "NFET",
+        "b": "bátur"
+    },
+    {
+        "g": "NFETgr",
+        "b": "báturinn"
+    },
+    {
+        "g": "ÞFET",
+        "b": "bát"
+    },
+    {
+        "g": "ÞFETgr",
+        "b": "bátinn"
+    },
+    {
+        "g": "ÞGFET",
+        "b": "báti"
+    },
+    {
+        "g": "ÞGFET2",
+        "b": "bát"
+    },
+    {
+        "g": "ÞGFETgr",
+        "b": "bátnum"
+    },
+    {
+        "g": "EFET",
+        "b": "báts"
+    },
+    {
+        "g": "EFETgr",
+        "b": "bátsins"
+    },
+    {
+        "g": "NFFT",
+        "b": "bátar"
+    },
+    {
+        "g": "NFFTgr",
+        "b": "bátarnir"
+    },
+    {
+        "g": "ÞFFT",
+        "b": "báta"
+    },
+    {
+        "g": "ÞFFTgr",
+        "b": "bátana"
+    },
+    {
+        "g": "ÞGFFT",
+        "b": "bátum"
+    },
+    {
+        "g": "ÞGFFTgr",
+        "b": "bátunum"
+    },
+    {
+        "g": "EFFT",
+        "b": "báta"
+    },
+    {
+        "g": "EFFTgr",
+        "b": "bátanna"
+    }
+]
