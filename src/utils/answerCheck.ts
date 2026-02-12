@@ -9,10 +9,15 @@ export const checkAnswers = (answers: AnswerMap, verb: Verb): ResultMap => {
   const results = {} as ResultMap;
 
   (Object.keys(verb.answers) as ConjugationKey[]).forEach((key) => {
+    
+    if (answers[key] === undefined) {
+        return;
+    }
+
     const expected = normalize(verb.answers[key]);
     const received = normalize(answers[key]);
     results[key] = expected === received && received.length > 0;
   })
 
-  return results
+  return results;
 }
