@@ -55,9 +55,9 @@ const extractNounCases = (paradigm: WordParadigm, number: NounNumber, definite: 
   };
 
   // target tag example: ÞFETgr (accusative plural with definite article)
-  const targetTagSuffix = `${numberTag}`;
+  let targetTagSuffix = `${numberTag}`;
   if (definite) {
-    targetTagSuffix.concat(DEFINITE_ARTICLE_TAG);
+    targetTagSuffix = targetTagSuffix.concat(DEFINITE_ARTICLE_TAG);
   }
 
   // iterate over each case and find the corresponding form in the paradigm based on the tags
