@@ -20,11 +20,6 @@ import {
 import ErrorBanner from '../components/ErrorBanner';
 import ViewCardHeader from '../components/ViewCardHeader';
 
-import { readCacheFromStorage, writeCacheToStorage } from '../utils/localStorageCache';
-
-
-const CACHE_STORAGE_KEY = 'dmiiNounCaseCache';
-
 const CASE_TAGS: Record<NounCase, string> = {
   nominative: 'NF',
   accusative: 'ÞF',
@@ -132,7 +127,6 @@ export default function NounCaseTrainer() {
       }
 
       cacheRef.current[cacheKey] = noun;
-      writeCacheToStorage<Noun>(CACHE_STORAGE_KEY, cacheRef.current);
       setCurrentNoun(noun);
       setAnswer('');
       setSubmitted(false);
@@ -144,11 +138,6 @@ export default function NounCaseTrainer() {
       setIsLoading(false);
     }
   }
-
-  useEffect(() => {
-    // on initial load, populate cache from storage
-    cacheRef.current = { ...cacheRef.current, ...readCacheFromStorage<Noun>(CACHE_STORAGE_KEY) };
-  }, [])
 
   useEffect(() => {
     if (!currentLemma) {

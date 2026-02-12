@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { createDmiiClient, type WordParadigm } from '../api/dmiiClient'
 
 import ViewCardHeader from '../components/ViewCardHeader'
@@ -11,21 +11,14 @@ import {
   type Verb,
   verbLemmas,
 } from '../data/verbs'
-import verbCache from '../data/verbCache.json'
 
-import { readCacheFromStorage, writeCacheToStorage } from '../utils/localStorageCache'
-import { checkAnswers } from '../utils/answerCheck'
-import ErrorBanner from '../components/ErrorBanner'
-
-
-const CACHE_STORAGE_KEY = 'dmiiVerbCache'
+import { checkAnswers } from '../utils/answerCheck';
+import ErrorBanner from '../components/ErrorBanner';
 
 const TENSE_LABELS: Record<Tense, string> = {
   present: 'Present indicative',
   past: 'Past indicative',
 }
-
-const getCacheKey = (lemma: string, tense: Tense) => `${lemma}:${tense}`
 
 const extractIndicative = (paradigm: WordParadigm, tense: Tense) => {
 
@@ -84,10 +77,6 @@ const extractIndicative = (paradigm: WordParadigm, tense: Tense) => {
 
 export default function VerbConjugator() {
 
-  const cacheRef = useRef<Record<string, Verb>>(
-    (verbCache as Record<string, Verb>) ?? {},
-  );
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [tense, setTense] = useState<Tense>('present');
   const [answers, setAnswers] = useState(emptyAnswers);
@@ -95,25 +84,10 @@ export default function VerbConjugator() {
   const [showAnswers, setShowAnswers] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [currentVerb, setCurrentVerb] = useState<Verb | null>(() => {
-    const initialCache = verbCache as Record<string, Verb>;
-    return initialCache[verbLemmas[currentIndex]] ?? null;
-  });
+  const [currentVerb, setCurrentVerb] = useState<Verb | null>(null);
   const currentLemma = verbLemmas[currentIndex] ?? null;
 
   const loadVerb = async (lemma: string, selectedTense: Tense) => {
-
-    // look up word with tense in cache first to avoid unnecessary API calls
-    const cacheKey = getCacheKey(lemma, selectedTense);
-    const cached = cacheRef.current[cacheKey];
-    if (cached) {
-      setLoadError(null);
-      setCurrentVerb(cached);
-      setAnswers(emptyAnswers);
-      setSubmitted(false);
-      setShowAnswers(false);
-      return;
-    }
 
     setIsLoading(true);
     setLoadError(null);
@@ -141,8 +115,6 @@ export default function VerbConjugator() {
         throw new Error('No usable conjugation found');
       }
 
-      cacheRef.current[cacheKey] = verb;
-      writeCacheToStorage<Verb>(CACHE_STORAGE_KEY, cacheRef.current);
       setCurrentVerb(verb);
       setAnswers(emptyAnswers);
       setSubmitted(false);
@@ -154,13 +126,6 @@ export default function VerbConjugator() {
       setIsLoading(false);
     }
   }
-
-  useEffect(() => {
-    // On initial load, populate cache from localStorage
-    const stored = readCacheFromStorage<Verb>(CACHE_STORAGE_KEY);
-    cacheRef.current = { ...cacheRef.current, ...stored };
-
-  }, []);
 
   useEffect(() => {
     if (!currentLemma) {
