@@ -1,8 +1,8 @@
 
 interface Props {
     error: string | null;
-    onRetry: () => void;
-    isRetrying: boolean;
+    onRetry?: () => void;
+    isRetrying?: boolean;
 }
 export default function ErrorBanner({ error, onRetry, isRetrying }: Props) {
 
