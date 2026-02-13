@@ -16,6 +16,7 @@ import {
 import ErrorBanner from '../components/ErrorBanner';
 import ViewCardHeader from '../components/ViewCardHeader';
 import { useFetchNoun } from '../hooks/useFetchNoun';
+import { Button } from '../components/Button';
 
 
 const normalize = (value: string) => value.trim().toLowerCase()
@@ -217,19 +218,19 @@ export default function NounCaseTrainer() {
         </div>
 
         <div className="actions">
-          <button
+          <Button
             type="submit"
             className="primary"
             disabled={!currentNoun || isLoading}
           >
             Submit
-          </button>
-          <button type="button" className="ghost" onClick={handleToggleAnswer}>
+          </Button>
+          <Button className="ghost" onClick={handleToggleAnswer}>
             {showAnswer ? 'Hide Answer' : 'Show Answer'}
-          </button>
-          <button type="button" className="ghost" onClick={handleNextNoun}>
+          </Button>
+          <Button className="ghost" onClick={handleNextNoun} loading={isLoading}>
             New noun
-          </button>
+          </Button>
         </div>
       </form>
     </>

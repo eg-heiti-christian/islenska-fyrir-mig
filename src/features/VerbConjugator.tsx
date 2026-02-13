@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
-import { createDmiiClient, type WordParadigm } from '../api/dmiiClient'
 
-import ViewCardHeader from '../components/ViewCardHeader'
+
+import ViewCardHeader from '../components/ViewCardHeader';
+import ErrorBanner from '../components/ErrorBanner';
+import { Button } from '../components/Button';
 
 import {
   emptyAnswers,
@@ -13,7 +15,7 @@ import {
 } from '../data/verbs'
 
 import { checkAnswers } from '../utils/answerCheck';
-import ErrorBanner from '../components/ErrorBanner';
+import { createDmiiClient, type WordParadigm } from '../api/dmiiClient';
 
 const TENSE_LABELS: Record<Tense, string> = {
   present: 'Present indicative',
@@ -206,9 +208,8 @@ export default function VerbConjugator() {
 
       <div className="tense-toggle" role="group" aria-label="Tense">
         {(['present', 'past'] as Tense[]).map((option) => (
-          <button
+          <Button
             key={option}
-            type="button"
             className={
               option === tense ? 'tense-button active' : 'tense-button'
             }
@@ -216,13 +217,9 @@ export default function VerbConjugator() {
             aria-pressed={option === tense}
           >
             {TENSE_LABELS[option]}
-          </button>
+          </Button>
         ))}
       </div>
-
-      {isLoading ? (
-        <p className="status">Loading verbs from DMII...</p>
-      ) : null}
 
       <section className="verb">
         <span className="verb-label">Infinitive form</span>
@@ -272,21 +269,21 @@ export default function VerbConjugator() {
         </div>
 
         <div className="actions">
-          <button
+          <Button
             type="submit"
             className="primary"
             disabled={!currentVerb || isLoading}
           >
             Submit
-          </button>
+          </Button>
 
-          <button type="button" className="ghost" onClick={handleToggleAnswers}>
+          <Button className="ghost" onClick={handleToggleAnswers}>
             {showAnswers ? 'Hide Answers' : 'Show Answers'}
-          </button>
+          </Button>
 
-          <button type="button" className="ghost" onClick={handleNextVerb}>
+          <Button className="ghost" onClick={handleNextVerb} loading={isLoading}>
             New verb
-          </button>
+          </Button>
 
         </div>
       </form>
