@@ -2,12 +2,26 @@
   box-sizing: border-box;
 }
 
+
 :root {
   font-family: 'Space Grotesk', 'Sora', 'Segoe UI', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #1f1a14;
-  background-color: #f1eadf;
+  --color-bg: #181A1B;
+  --color-bg-alt: #23272A;
+  --color-surface: #242526;
+  --color-surface-alt: #2C2F33;
+  --color-primary: #2563eb;
+  --color-primary-light: #60a5fa;
+  --color-primary-dark: #1e40af;
+  --color-accent: #3b82f6;
+  --color-text: #F3F4F6;
+  --color-text-muted: #9CA3AF;
+  --color-border: #374151;
+  --color-error: #ef4444;
+  --color-success: #22c55e;
+  color: var(--color-text);
+  background-color: var(--color-bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -18,8 +32,11 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 #root {
   min-height: 100vh;
+  background: var(--color-bg);
 }
