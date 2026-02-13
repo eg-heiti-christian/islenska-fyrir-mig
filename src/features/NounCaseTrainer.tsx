@@ -1,21 +1,14 @@
 import {
-  useEffect,
+  useCallback,
   useMemo,
-  useRef,
   useState,
   type ChangeEvent,
   type FormEvent,
-  type Ref,
 } from 'react';
-
-import { useFocus } from '../hooks/useFocus';
-
-import { createDmiiClient, type WordParadigm } from '../api/dmiiClient';
 
 import {
   nounCaseOptions,
   nounLemmas,
-  type Noun,
   type NounCase,
   type NounNumber,
 } from '../data/nouns';
@@ -28,7 +21,6 @@ import { useFetchNoun } from '../hooks/useFetchNoun';
 const normalize = (value: string) => value.trim().toLowerCase()
 
 export default function NounCaseTrainer() {
-  const [answerInputRef, setInputFocus] = useFocus();
 
   const [currentIndex, setCurrentIndex] = useState(Math.floor(Math.random() * nounLemmas.length));
   const [targetCase, setTargetCase] = useState<NounCase>('accusative');
@@ -52,6 +44,13 @@ export default function NounCaseTrainer() {
     return expected.length > 0 && expected === received;
   }, [answer, currentNoun, submitted, targetCase]);
 
+  // using this "hack" to focus the input after the noun data has loaded
+  const callbackRef = useCallback((inputElement: HTMLInputElement | null) => {
+    if (inputElement && currentNoun) {
+      inputElement.focus();
+    }
+  }, [currentNoun]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);
@@ -71,8 +70,6 @@ export default function NounCaseTrainer() {
     setAnswer('');
     setSubmitted(false);
     setShowAnswer(false);
-
-    setInputFocus();
   }
 
   const handleCaseChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -204,7 +201,7 @@ export default function NounCaseTrainer() {
             <input
               type="text"
               autoFocus
-              ref={answerInputRef}
+              ref={callbackRef}
               value={answer}
               onChange={(event) => setAnswer(event.target.value)}
               placeholder="Type your answer"

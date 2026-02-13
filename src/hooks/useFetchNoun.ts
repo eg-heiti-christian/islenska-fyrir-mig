@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react';
 import { createDmiiClient, type WordParadigm } from '../api/dmiiClient';
 
 import {
-  nounCaseOptions,
-  nounLemmas,
   type Noun,
   type NounCase,
   type NounNumber,
