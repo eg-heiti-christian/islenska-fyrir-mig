@@ -77,7 +77,7 @@ const extractIndicative = (paradigm: WordParadigm, tense: Tense) => {
 
 export default function VerbConjugator() {
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(Math.floor(Math.random() * verbLemmas.length));
   const [tense, setTense] = useState<Tense>('present');
   const [answers, setAnswers] = useState(emptyAnswers);
   const [submitted, setSubmitted] = useState(false);
@@ -186,6 +186,14 @@ export default function VerbConjugator() {
     setShowAnswers(false);
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
+    // Check for 'Enter' key and 'Shift' key
+    if (event.key === 'Enter' && event.shiftKey) {
+      event.preventDefault(); 
+      handleNextVerb();
+    }
+  };
+
   return (
     <>
       <ErrorBanner error={loadError} onRetry={() => loadVerb(currentLemma!, tense)} isRetrying={isLoading} />
@@ -223,7 +231,7 @@ export default function VerbConjugator() {
         </span>
       </section>
 
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
         <div className="grid">
           {isLoading
             ? fields.map(({ key, label }) => (
@@ -232,7 +240,7 @@ export default function VerbConjugator() {
                 <div className="skeleton-input" />
               </div>
             ))
-            : fields.map(({ key, label }) => {
+            : fields.map(({ key, label }, index) => {
               const status = results ? results[key] : null
               const statusClass =
                 submitted && status !== null
@@ -246,6 +254,7 @@ export default function VerbConjugator() {
                   <span>{label}</span>
                   <input
                     type="text"
+                    autoFocus={index === 0}
                     value={answers[key]}
                     onChange={(event) => handleChange(key, event.target.value)}
                     placeholder="Type your answer"

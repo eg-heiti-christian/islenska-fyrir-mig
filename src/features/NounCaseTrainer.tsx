@@ -34,8 +34,6 @@ const NUMBER_TAGS: Record<NounNumber, string> = {
 
 const DEFINITE_ARTICLE_TAG = 'gr';
 
-
-const getCacheKey = (lemma: string, number: NounNumber, definite: boolean) => `${lemma}:${number}:${definite ? 'def' : 'indef'}`;
 const normalizeTag = (value: string) => value.toUpperCase();
 
 const extractNounCases = (paradigm: WordParadigm, number: NounNumber, definite: boolean) => {
@@ -82,9 +80,9 @@ const extractNounCases = (paradigm: WordParadigm, number: NounNumber, definite: 
 const normalize = (value: string) => value.trim().toLowerCase()
 
 export default function NounCaseTrainer() {
-  const cacheRef = useRef<Record<string, Noun>>({});
+  const answerInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(Math.floor(Math.random() * nounLemmas.length));
   const [targetCase, setTargetCase] = useState<NounCase>('accusative');
   const [number, setNumber] = useState<NounNumber>('singular');
   const [includeArticle, setIncludeArticle] = useState(false);
@@ -97,17 +95,9 @@ export default function NounCaseTrainer() {
 
   const currentLemma = nounLemmas[currentIndex] ?? null;
 
+  console.log(document.activeElement)
+
   const loadNoun = async (lemma: string, selectedNumber: NounNumber, selectedDefinite: boolean) => {
-    const cacheKey = getCacheKey(lemma, selectedNumber, selectedDefinite);
-    const cached = cacheRef.current[cacheKey];
-    if (cached) {
-      setLoadError(null);
-      setCurrentNoun(cached);
-      setAnswer('');
-      setSubmitted(false);
-      setShowAnswer(false);
-      return;
-    }
 
     setIsLoading(true);
     setLoadError(null);
@@ -126,7 +116,6 @@ export default function NounCaseTrainer() {
         throw new Error('No usable noun cases found');
       }
 
-      cacheRef.current[cacheKey] = noun;
       setCurrentNoun(noun);
       setAnswer('');
       setSubmitted(false);
@@ -136,6 +125,10 @@ export default function NounCaseTrainer() {
       setLoadError(error.message ?? 'DMII API unavailable for this noun. Please retry soon.');
     } finally {
       setIsLoading(false);
+
+      if (answerInputRef.current) {
+        answerInputRef.current.focus();
+      }
     }
   }
 
@@ -176,6 +169,10 @@ export default function NounCaseTrainer() {
     setAnswer('');
     setSubmitted(false);
     setShowAnswer(false);
+
+    if (answerInputRef.current) {
+      answerInputRef.current.focus();
+    }
   }
 
   const handleCaseChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -211,6 +208,14 @@ export default function NounCaseTrainer() {
     setSubmitted(false);
     setShowAnswer(false);
   }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
+    // Check for 'Enter' key and 'Shift' key
+    if (event.key === 'Enter' && event.shiftKey) {
+      event.preventDefault(); 
+      handleNextNoun();
+    }
+  };
 
   return (
     <>
@@ -281,7 +286,7 @@ export default function NounCaseTrainer() {
         </div>
       </div>
 
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
         <div className="grid">
           <label
             className={
@@ -298,6 +303,8 @@ export default function NounCaseTrainer() {
             </span>
             <input
               type="text"
+              autoFocus
+              ref={answerInputRef}
               value={answer}
               onChange={(event) => setAnswer(event.target.value)}
               placeholder="Type your answer"
